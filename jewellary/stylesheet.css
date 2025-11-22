@@ -1,0 +1,151 @@
+﻿body {
+}
+
+#wrapper {
+    font-size: 20pt;
+    border: 5pxsolidblack;
+    border-radius: 10px;
+    width: 1325px;
+}
+
+#header {
+    height: 112px;
+    width: 1303px;
+    font-family: 'Poor Richard';
+    background-color: brown;
+    margin: 0px;
+    padding: 10px;
+    border-radius: 5px;
+    color: black;
+}
+
+#logo {
+    float: left;
+    margin-bottom: 10px;
+    width: 130px;
+    height: 95px;
+}
+
+#title {
+    font-size: 30px;
+    color: white;
+}
+
+#login {
+    float: right;
+    padding: 13px,18px,10px,10px;
+}
+
+.login1 {
+    border-radius: 5px;
+}
+
+.float_right {
+    float: right;
+}
+
+#default {
+    font-size: 50px;
+    font-family: 'Poor Richard';
+}
+
+.float_right {
+    float: right;
+}
+
+a {
+    padding: 3px;
+}
+
+#menu {
+    background-color: white;
+    height: 30px;
+    width: 1325px;
+    border-radius: 5px;
+    word-spacing: 5px;
+}
+
+    #menu a {
+        color: black;
+        text-decoration: none;
+        font-size: 25px;
+        font-family: 'Poor Richard';
+    }
+
+        #menu a:hover {
+            background-color: black;
+            color: white;
+            border-radius: 15px;
+        }
+
+#content {
+    background-image: url('../img/11.jfif');
+    background-repeat: no-repeat;
+    font-size: 20px;
+    width: 1330px;
+    height: 500px;
+    /*background-color:lightgray;*/
+    margin: 0px,0px,0px,0px;
+    border-radius: 5px;
+}
+
+#footer {
+    height: 35px;
+    width: 1325px;
+    color: black;
+    background-color: brown;
+    text-align: center;
+    font-size: 30px;
+    font-family: 'Poor Richard';
+    border-radius: 5px;
+}
+
+.label {
+    font-size: 17px;
+    color: red;
+}
+
+.dropdownlist {
+    border-radius: 8px;
+    background-color: white;
+    border: solid3pxblack;
+    font-weight: bolder;
+    margin-left: 0px;
+}
+
+table {
+    border-radius: 9px;
+    border-color: black;
+    padding: 15px15px15px15px;
+}
+
+.textbox {
+    border-radius: 8px;
+    background-color: white;
+    border: 3pxsolidblack;
+    font-weight: bolder;
+}
+
+.button {
+    font-size: medium;
+    border: 3px solid black;
+    color: black;
+    border-radius: 5px;
+    background-color: white;
+    margin: 5px;
+}
+
+b {
+    color: black;
+}
+
+a {
+    color: blue;
+    font-size: 15px;
+}
+
+    a:hover {
+        background-color: white;
+        color: #08314d;
+        border-radius: 15px;
+    }

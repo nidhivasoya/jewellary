@@ -1,0 +1,87 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="jewellary.SiteMaster" %>
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jewellary Shop</title>
+
+    <asp:PlaceHolder runat="server">
+  </asp:PlaceHolder>
+ <link href="stylesheet.css" rel="stylesheet" type="text/css"/>
+  <title>jewellary shope</title>
+  <asp:ContentPlaceHolder id="head" runat="server">
+  </asp:ContentPlaceHolder>
+
+
+    
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:ScriptManager runat="server">
+
+            <Scripts>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+            </Scripts>
+        </asp:ScriptManager>
+
+        
+      <div id="wrapper">
+          <div id="header">
+              <div id="logo">
+                  <asp:Image ID="Image2" runat="server" Height="100px" ImageUrl="~/image/4.jfif" Width="100px" Style="margin-left: 5px" />
+              </div>
+              <div id="login">
+                  <asp:LinkButton ID="userlogin" runat="server" PostBackUrl="~/login.aspx" Font-Size="20px" CssClass="float_right" OnClick="userlogin_Click">
+        <img src="../image/login2.gif" height="80" width="80" class="float_right"/>
+        </asp:LinkButton></br>
+
+      <asp:LinkButton ID="userlogout" runat="server" OnClick="userlogout_Click" Font-Size="20px" CssClass="float_right">
+        <img src="../image/logout2.jfif" height="80" width="80" class="float_right"/>
+        </asp:LinkButton>
+
+       <asp:LinkButton ID="addtocart" runat="server" PostBackUrl="~/addtocart.aspx" Font-Size="15">
+         <img src="../image/addtocart.jfif" height="35px" width="35px"> 
+       </asp:LinkButton>
+
+        <asp:LinkButton ID="changepassword" runat="server" PostBackUrl="~/changepassword.aspx" Font-Size="20px" CssClass="float_right">Change Password
+        </asp:LinkButton></br>
+
+              </div>
+              <div id="title" align="center"><h1>jewellary</h1></div>
+          </div>
+          <br />
+
+            <div id="menu">
+                <asp:HyperLink ID="home" runat="server" NavigateUrl="~/home.aspx">Home</asp:HyperLink>
+                <asp:HyperLink ID="aboutus" runat="server" NavigateUrl="~/About.aspx">About us</asp:HyperLink>
+                <asp:HyperLink ID="contactus" runat="server" NavigateUrl="~/contact.aspx">Contact us</asp:HyperLink>
+                <asp:HyperLink ID="feedback" runat="server" NavigateUrl="~/feedback.aspx">Feedback</asp:HyperLink>
+                <asp:HyperLink ID="product" runat="server" NavigateUrl="~/product.aspx">Gallery</asp:HyperLink>
+
+            </div>
+
+            <div class="container body-content">
+                <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+                <hr />
+                <footer>
+                    <p>nidhi 2025</p>
+                </footer>
+            </div>
+        </div>
+
+        <asp:PlaceHolder runat="server">
+        </asp:PlaceHolder>
+    </form>
+</body>
+</html>
+

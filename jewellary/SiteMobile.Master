@@ -1,0 +1,57 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="SiteMobile.Master.cs" Inherits="jewellary.Site_Mobile" %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <script type="text/javascript">
+        function del() {
+            return confirm("Are you sure Want to Delete!!");
+        }
+        function upd() {
+            return confirm("Are you sure Want to Update!!");
+        }
+        function add() {
+            return confirm("You Want To Add?");
+        }
+    </script>
+    <link href="stylesheet1.css" rel="stylesheet" type="text/css" />
+    <title>jewellary shope</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div id="wrapper">
+            <div id="header">
+                <div id="logo">
+                    <asp:Image ID="Image2" runat="server" Height="100px" ImageUrl="~/image/4.jfif" Width="100px" Style="margin-left: 5px" />
+                </div>
+                <div id="login">
+                    <asp:LinkButton ID="adminlogin" runat="server" PostBackUrl="~/login.aspx" OnClick="adminlogin_Click1"><img src="../image/login2.gif" height="80" width="80" class="float_right"/></asp:LinkButton>
+                    <asp:LinkButton ID="adminlogout" runat="server" OnClick="adminlogout_Click"><img src="../image/logout2.jfif" height="80" width="80" class="float_right"/></asp:LinkButton>
+                    <asp:Label ID="Welcome" runat="server" Font-Size="Small"></asp:Label><td>
+                </div>
+                <div id="title" align="center"><h1>jewellary</h1></div>
+            </div>
+            <br />
+
+            <div id="menu">
+                <asp:LinkButton ID="home" runat="server" PostBackUrl="~/home.aspx" CausesValidation="false">Home</asp:LinkButton>
+                <asp:LinkButton ID="viewcategory" runat="server" PostBackUrl="~/viewcategory.aspx" CausesValidation="false">ManageCategory</asp:LinkButton>
+                <asp:LinkButton ID="viewproduct" runat="server" PostBackUrl="~/viewproduct.aspx" CausesValidation="false">ManageProduct</asp:LinkButton>
+                <asp:LinkButton ID="viewpurchase" runat="server" PostBackUrl="~/viewpurchase.aspx" CausesValidation="false">ViewPurchase</asp:LinkButton>
+                <asp:LinkButton ID="viewregistration" runat="server" PostBackUrl="~/viewregistration.aspx" CausesValidation="false">ViewRegistration</asp:LinkButton>
+                <asp:LinkButton ID="viewfeedbcak" runat="server" PostBackUrl="~/viewfeedback.aspx" CausesValidation="false">ViewFeedback</asp:LinkButton>
+            </div>
+
+            <div id="content">
+                <div>
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+                <div id="footer">
+                    <center>bansi & nidhi</center>
+                </div>
+            </div>
+    </form>
+</body>
+</html>
