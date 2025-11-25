@@ -55,7 +55,7 @@
                     <asp:TemplateField HeaderText="Action">
                         <ItemTemplate>
                             <a href='product1.aspx?product_id=<%# Eval("product_id") %>'>
-                                <img src="../image/edt.Jfif" height="35" width="35" />
+                                <img src=".." height="35" width="35" />
                             </a>
 
                             <a href='viewproduct.aspx?product_id=<%# Eval("product_id") %>'>

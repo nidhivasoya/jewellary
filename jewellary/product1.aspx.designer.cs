@@ -24,13 +24,13 @@ namespace jewellary
         protected global::System.Web.UI.WebControls.Label lbl_msg1;
 
         /// <summary>
-        /// lbl_fname control.
+        /// LabelCat control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_fname;
+        protected global::System.Web.UI.WebControls.Label LabelCat;
 
         /// <summary>
         /// category control.
@@ -42,13 +42,13 @@ namespace jewellary
         protected global::System.Web.UI.WebControls.DropDownList category;
 
         /// <summary>
-        /// product_image control.
+        /// LabelImg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label product_image;
+        protected global::System.Web.UI.WebControls.Label LabelImg;
 
         /// <summary>
         /// FileUpload1 control.
@@ -69,13 +69,13 @@ namespace jewellary
         protected global::System.Web.UI.WebControls.Image Image1;
 
         /// <summary>
-        /// product_name control.
+        /// LabelName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label product_name;
+        protected global::System.Web.UI.WebControls.Label LabelName;
 
         /// <summary>
         /// txt_name control.
@@ -87,22 +87,22 @@ namespace jewellary
         protected global::System.Web.UI.WebControls.TextBox txt_name;
 
         /// <summary>
-        /// req_uname control.
+        /// req_name control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator req_uname;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator req_name;
 
         /// <summary>
-        /// product_price control.
+        /// LabelPrice control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label product_price;
+        protected global::System.Web.UI.WebControls.Label LabelPrice;
 
         /// <summary>
         /// txt_price control.
@@ -114,22 +114,22 @@ namespace jewellary
         protected global::System.Web.UI.WebControls.TextBox txt_price;
 
         /// <summary>
-        /// req_con control.
+        /// req_price control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator req_con;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator req_price;
 
         /// <summary>
-        /// product_quantity control.
+        /// LabelQty control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label product_quantity;
+        protected global::System.Web.UI.WebControls.Label LabelQty;
 
         /// <summary>
         /// txt_quantity control.
@@ -141,22 +141,22 @@ namespace jewellary
         protected global::System.Web.UI.WebControls.TextBox txt_quantity;
 
         /// <summary>
-        /// req_quantity control.
+        /// req_qty control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator req_quantity;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator req_qty;
 
         /// <summary>
-        /// Label1 control.
+        /// LabelDesc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label LabelDesc;
 
         /// <summary>
         /// TextBox1 control.
@@ -168,13 +168,13 @@ namespace jewellary
         protected global::System.Web.UI.WebControls.TextBox TextBox1;
 
         /// <summary>
-        /// RequiredFieldValidator1 control.
+        /// req_desc control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator req_desc;
 
         /// <summary>
         /// btn_edit control.

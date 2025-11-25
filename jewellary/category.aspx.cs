@@ -70,6 +70,7 @@ namespace jewellary
         protected void reset_Click(object sender, EventArgs e)
         {
 
+
         }
     }
 }
