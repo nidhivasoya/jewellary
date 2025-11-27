@@ -234,6 +234,7 @@
     <Content Include="stylesheet.css" />
     <Content Include="StyleSheet1.css" />
     <Content Include="thankyou.aspx" />
+    <Content Include="viewcategory.aspx" />
     <Content Include="viewregistration.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
@@ -402,6 +403,13 @@
     </Compile>
     <Compile Include="thankyou.aspx.designer.cs">
       <DependentUpon>thankyou.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="viewcategory.aspx.cs">
+      <DependentUpon>viewcategory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="viewcategory.aspx.designer.cs">
+      <DependentUpon>viewcategory.aspx</DependentUpon>
     </Compile>
     <Compile Include="viewregistration.aspx.cs">
       <DependentUpon>viewregistration.aspx</DependentUpon>

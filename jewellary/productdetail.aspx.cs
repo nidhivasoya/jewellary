@@ -71,84 +71,89 @@ namespace jewellary
         {
             int r_id = Convert.ToInt16(Session["registration_id"].ToString());
             int qty = 0;
-            if (txt_quantity.Text != null)
-            {
-                qty = Convert.ToInt16(txt_quantity.Text);
-            }
-            if (txt_quantity.Text == null || qty == 0)
+
+            if (string.IsNullOrEmpty(txt_quantity.Text))
             {
                 Response.Redirect("productdetail.aspx?msg=3&product_id=" + id);
+                return;
             }
+
+            qty = Convert.ToInt16(txt_quantity.Text);
+
             if (p_qty == 0)
             {
                 Response.Redirect("productdetail.aspx?msg=1&product_id=" + id);
+                return;
             }
-            else if (p_qty >= qty)
+
+            if (p_qty < qty)
             {
-                cmd = new SqlCommand("select * from addtocart where product_id=" + id + " and registration_id=" + r_id, con);
-                con.Open();
-                dr = cmd.ExecuteReader();
-                if (dr.HasRows)
+                Response.Redirect("productdetail.aspx?msg=4&qt=" + p_qty + "&product_id=" + id);
+                return;
+            }
+
+            int price = Convert.ToInt32(lbl_price.Text);
+
+
+            cmd = new SqlCommand("SELECT * FROM addtocart WHERE product_id=@pid AND registration_id=@rid", con);
+            cmd.Parameters.AddWithValue("@pid", id);
+            cmd.Parameters.AddWithValue("@rid", r_id);
+
+            con.Open();
+            dr = cmd.ExecuteReader();
+
+            if (dr.HasRows)
+            {
+                dr.Read();
+                int currentQty = Convert.ToInt32(dr["a_quantity"]);
+                int stockLeft = p_qty - currentQty;
+
+                con.Close();
+
+                if (qty <= stockLeft)
                 {
-                    if (dr.Read())
-                    {
-                        int stock = 0;
-                        stock = p_qty - Convert.ToInt16(dr["a_quantity"].ToString());
-                        if (qty <= stock)
-                        {
-                            cmd = new SqlCommand("update addtocart set a_quantity=" + (Convert.ToInt16(dr["a_quantity"].ToString()) + qty) + " where product_id=" + id, con);
-                            con.Close();
-                            con.Open();
-                            int i = cmd.ExecuteNonQuery();
-                            if (i > 0)
-                            {
-                                Response.Redirect("addtocart.aspx?product_id=" + id);
-                            }
-                            else
-                            {
-                                if (stock == 0)
-                                {
-                                    Response.Redirect("productdetail.aspx?msg=1&product_id=" + id);
-                                }
-                                else
-                                {
-                                    Response.Redirect("productdetail.aspx?msg=2&product_id=" + id);
-                                }
-                            }
-                            con.Close();
-                            con.Open();
-                        }
-                        else
-                        {
-                            if (stock == 0)
-                            {
-                                Response.Redirect("productdetail.aspx?msg=1&product_id=" + id);
-                            }
-                            else
-                            {
-                                Response.Redirect("productdetail.aspx?msg=4&qt=" + stock + "&product_id=" + id);
-                            }
-                        }
-                    }
+
+                    cmd = new SqlCommand(
+                        "UPDATE addtocart SET a_quantity = a_quantity + @qty WHERE product_id=@pid AND registration_id=@rid",
+                        con);
+
+                    cmd.Parameters.AddWithValue("@qty", qty);
+                    cmd.Parameters.AddWithValue("@pid", id);
+                    cmd.Parameters.AddWithValue("@rid", r_id);
+
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+
+                    Response.Redirect("addtocart.aspx?product_id=" + id);
                 }
                 else
                 {
-                    con.Close();
-                    cmd = new SqlCommand("insert into addtocart(registration_id,product_id,a_quantity)values(" + r_id + "," + id + "," + txt_quantity.Text + ")", con);
-                    con.Open();
-                    int i = cmd.ExecuteNonQuery();
-                    if (i > 0)
-                    {
-                        Response.Redirect("addtocart.aspx?product_id=" + id);
-                    }
-                    con.Close();
+                    Response.Redirect("productdetail.aspx?msg=4&qt=" + stockLeft + "&product_id=" + id);
                 }
             }
             else
             {
-                Response.Redirect("productdetail.aspx?msg=4&qt=" + p_qty + "&product_id=" + id);
+                con.Close();
+
+
+                cmd = new SqlCommand(
+                    "INSERT INTO addtocart (registration_id, product_id, a_quantity, product_price) " +
+                    "VALUES (@rid, @pid, @qty, @price)", con);
+
+                cmd.Parameters.AddWithValue("@rid", r_id);
+                cmd.Parameters.AddWithValue("@pid", id);
+                cmd.Parameters.AddWithValue("@qty", qty);
+                cmd.Parameters.AddWithValue("@price", price);
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                Response.Redirect("addtocart.aspx?product_id=" + id);
             }
         }
-    }
-}
 
+    }
+
+}

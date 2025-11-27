@@ -29,7 +29,6 @@
                    <asp:TemplateField HeaderText="Actoin">
                         <ItemTemplate>
                                 <a href="viewpurchasedetail.aspx?bill1_id=<%# Eval("bill1_id") %>">View</a>
-                                 <a href="shipping.aspx?bill1_id=<%# Eval("bill1_id") %>">Shipping</a> 
                                 <%--<a href="viewpurchase.aspx?bill1_id=<%# Eval("bill1_id") %>">delete</a>--%>
                         </ItemTemplate>
                     </asp:TemplateField>

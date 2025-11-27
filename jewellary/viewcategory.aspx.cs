@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -16,12 +17,12 @@ namespace jewellary
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
             string s = ConfigurationManager.ConnectionStrings["jw"].ConnectionString;
             con = new SqlConnection(s);
-            if (Request.QueryString["category_id"] != null)
+            if (Request.QueryString["product_id"] != null)
             {
-                int category_id = Convert.ToInt16(Request.QueryString["category_id"]);
-
+                int category_id = Convert.ToInt16(Request.QueryString["product_id"].ToString());
                 cmd = new SqlCommand("delete from category where category_id=@category_id", con);
                 con.Open();
                 cmd.Parameters.AddWithValue("@category_id", +category_id);
@@ -32,8 +33,9 @@ namespace jewellary
                 }
                 con.Close();
             }
-        }
 
+        }
+       
         protected void new_Click(object sender, EventArgs e)
         {
             Response.Redirect("category.aspx");
@@ -43,6 +45,4 @@ namespace jewellary
 
         }
     }
-
 }
-   

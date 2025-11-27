@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
 
-     <br />
+    <br />
     <center>
      <tr>
       <h2 style="color:black; font-family:'Poor Richard';"><center>Addtocart</center></h2><br>

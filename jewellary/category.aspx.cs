@@ -22,29 +22,18 @@ namespace jewellary
             {
                 if (Request.QueryString["category_id"] != null)
                 {
-                    int id = Convert.ToInt32(Request.QueryString["category_id"]);
-                    SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["jw"].ConnectionString);
-
-                    SqlCommand cmd = new SqlCommand("DELETE FROM category WHERE category_id = @id", con);
-                    cmd.Parameters.AddWithValue("@id", id);
-
+                    int id = Convert.ToInt16(Request.QueryString["category_id"].ToString());
+                    cmd = new SqlCommand("select * from category where category_id=" + id, con);
                     con.Open();
-                    int i = cmd.ExecuteNonQuery();
+                    dr = cmd.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        dr.Read();
+                        Txt_cnm.Text = dr["category_name"].ToString();
+                    }
                     con.Close();
-
-                    if (i > 0)
-                    {
-                        lb1_msg.Text = "Category Deleted Successfully!";
-                    }
-                    else
-                    {
-                        lb1_msg.Text = "Category Not Deleted!";
-                    }
-
-                    Response.Redirect("viewcategory.aspx");
                 }
             }
-
         }
         protected void add_Click(object sender, EventArgs e)
         {
@@ -69,7 +58,7 @@ namespace jewellary
         }
         protected void reset_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("viewcategory.aspx");
 
         }
     }

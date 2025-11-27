@@ -15,22 +15,32 @@ namespace jewellary
         SqlCommand cmd;
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            if (Session["registration_id"] == null)
+            {
+                Response.Redirect("login.aspx");
+                return;
+            }
+
             String str = ConfigurationManager.ConnectionStrings["jw"].ConnectionString;
             con = new SqlConnection(str);
+
+
             if (Request.QueryString["addtocart_id"] != null)
             {
-                int a = Convert.ToInt16(Request.QueryString["addtocart_id"].ToString());
-                cmd = new SqlCommand("delete from addtocart where addtocart_id=@addtocart_id", con);
+                int a = Convert.ToInt32(Request.QueryString["addtocart_id"]);
+
+                cmd = new SqlCommand("delete from addtocart where addtocart_id=@id", con);
+                cmd.Parameters.AddWithValue("@id", a);
+
                 con.Open();
-                cmd.Parameters.AddWithValue("@addtocart_id", +a);
-                int i = cmd.ExecuteNonQuery();
-                if (i > 0)
-                {
-                    Response.Redirect("addtocart.aspx");
-                }
+                cmd.ExecuteNonQuery();
                 con.Close();
+
+                Response.Redirect("addtocart.aspx");
             }
         }
+
         protected void GridView1_RowCreated(object sender, GridViewRowEventArgs e)
         {
             TableCell tc = new TableCell();

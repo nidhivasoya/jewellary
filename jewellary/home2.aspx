@@ -3,7 +3,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="home">
-        <center><h2 style="color:black; font-family:'Poor Richard';"><i>WelCome To Dry-Fruit</i></h2></center>
+        <center><h2 style="color:black; font-family:'Poor Richard';"><i>jewellary</i></h2></center>
         <center><br />
            <marquee direction="left"scrolldelay="150" style="height: 150px; width: 457px;"> 
                 <tr>

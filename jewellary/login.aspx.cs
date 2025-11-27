@@ -25,24 +25,39 @@ namespace jewellary
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            string unm = r_username.Text;
-            string pwd = r_password.Text;
+            string unm = r_username.Text.Trim();
+            string pwd = r_password.Text.Trim();
+
             con.Open();
-            com = new SqlCommand("select * from Registration where registration_username='" + r_username.Text + "'and registration_password='" + r_password.Text + "'", con);
-            SqlDataReader dr;
-            dr = com.ExecuteReader();
+
+            com = new SqlCommand(
+                "SELECT registration_id, registration_username FROM Registration WHERE registration_username=@un AND registration_password=@pw",
+                con
+            );
+
+            com.Parameters.AddWithValue("@un", unm);
+            com.Parameters.AddWithValue("@pw", pwd);
+
+            SqlDataReader dr = com.ExecuteReader();
+
             if (dr.HasRows)
             {
                 dr.Read();
-                Session["registration_username"] = unm;
+
+
+                Session["registration_id"] = dr["registration_id"];
+                Session["registration_username"] = dr["registration_username"];
+
+                con.Close();
                 Response.Redirect("home.aspx");
             }
             else
             {
-                Label1.Text = "Incorrect Username & Password";
-                //Response.Redirect("login.aspx");
+                con.Close();
+                Label1.Text = "Incorrect Username or Password";
             }
         }
+
         protected void Button2_Click(object sender, EventArgs e)
         {
             r_username.Text = "";

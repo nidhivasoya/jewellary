@@ -24,7 +24,7 @@
       <asp:Button ID="Button1" runat="server" class="btn btn-primary" Text="OK" Font-Italic="false" Font-Bold="true"  ForeColor="black" ValidationGroup="product" OnClick="Button1_Click"/></td></tr>
 </table><br />
   </center>
-    <center> <a href="product1.aspx">back</a></center>
+    <center> <a href="product.aspx">back</a></center>
 </asp:Content>
 
 
