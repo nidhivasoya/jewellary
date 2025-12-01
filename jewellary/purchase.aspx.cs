@@ -1,99 +1,121 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Configuration;
+using System.Web.UI;
 
-public partial class user_purchase : System.Web.UI.Page
+namespace jewellary
 {
-    SqlConnection con;
-    SqlCommand cmd, cmd1, cmd2, cmd3;
-    SqlDataReader dr, dr1;
-    int k, id;
-    int qty1;
-    protected void Page_Load(object sender, EventArgs e)
+    public partial class purchase : System.Web.UI.Page
     {
-        String str = ConfigurationManager.ConnectionStrings["dryfruit"].ConnectionString;
-        con = new SqlConnection(str);
-        if (Session["registration_id"] == null)
+        SqlConnection con;
+        SqlCommand cmd, cmd1, cmd2, cmd3;
+        SqlDataReader dr, dr1;
+        int k, id;
+        int qty1;
+
+        protected void Page_Load(object sender, EventArgs e)
         {
-            Response.Redirect("login.aspx");
-        }
-    }
-    protected void Button1_Click(object sender, EventArgs e)
-    {
-        k = Convert.ToInt16(Session["registration_id"]);
-        DateTime time = DateTime.Now;
-        cmd = new SqlCommand("insert into ordermaster(registration_id,bill1_total,bill1_date,bill1_status,bill1_name,bill1_email,bill1_contact,bill1_city)values('" + k + "','" + Convert.ToDouble(Session["total"]) + "','" + time + "','" + 0 + "','" + bill_name.Text + "','" + txt_mail.Text + "','" + txt_contactno.Text + "','" + bill_city.Text + "')", con);
-        con.Open();
-        int i = cmd.ExecuteNonQuery();
-        if (i > 0)
-        {
-            cmd1 = new SqlCommand("select bill1_id from ordermaster where bill1_name='" + bill_name.Text + "'", con);
-            dr = cmd1.ExecuteReader();
-            if (dr.HasRows)
+            String str = ConfigurationManager.ConnectionStrings["jw"].ConnectionString;
+            con = new SqlConnection(str);
+
+            if (Session["registration_id"] == null)
             {
-                dr.Read();
-                id = Convert.ToInt16(dr["bill1_id"].ToString());
+                Response.Redirect("login.aspx");
             }
-            dr.Close();
-            con.Close();
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            k = Convert.ToInt32(Session["registration_id"]);
+            DateTime time = DateTime.Now;
+
+            // ⭐ FIXED INSERT QUERY (correct number of columns)
+            cmd = new SqlCommand(
+                "INSERT INTO ordermaster(registration_id,bill1_total,bill1_date,bill1_name,bill1_email,bill1_contact,bill1_city) " +
+                "VALUES(@rid,@total,@date,@name,@mail,@contact,@city)", con);
+
+            cmd.Parameters.AddWithValue("@rid", k);
+            cmd.Parameters.AddWithValue("@total", Convert.ToDouble(Session["total"]));
+            cmd.Parameters.AddWithValue("@date", time);
+            cmd.Parameters.AddWithValue("@name", bill_name.Text);
+            cmd.Parameters.AddWithValue("@mail", txt_mail.Text);
+            cmd.Parameters.AddWithValue("@contact", txt_contactno.Text);
+            cmd.Parameters.AddWithValue("@city", bill_city.Text);
+
             con.Open();
-            string str = "select * from addtocart where registration_id='" + k + "'";
+            int i = cmd.ExecuteNonQuery();
             con.Close();
-            SqlDataAdapter da = new SqlDataAdapter(str, con);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
-            for (int r = 0; r < dt.Rows.Count; r++)
+
+            if (i > 0)
             {
-                int qty = Convert.ToInt16(dt.Rows[r]["a_quantity"].ToString());
-                int pid = Convert.ToInt16(dt.Rows[r]["product_id"].ToString());
-                cmd1 = new SqlCommand("select * from product where product_id='" + pid + "'", con);
+                // ⭐ FIXED: SAFE WAY TO GET LAST INSERTED ID
+                cmd1 = new SqlCommand("SELECT TOP 1 bill1_id FROM ordermaster WHERE registration_id=@rid ORDER BY bill1_id DESC", con);
+                cmd1.Parameters.AddWithValue("@rid", k);
+
                 con.Open();
-                dr1 = cmd1.ExecuteReader();
-                if (dr1.HasRows)
+                dr = cmd1.ExecuteReader();
+                if (dr.Read())
                 {
-                    dr1.Read();
-                    qty1 = Convert.ToInt16(dr1["product_quantity"].ToString());
+                    id = Convert.ToInt32(dr["bill1_id"]);
                 }
-                int p_quantity = qty1 - qty;
-                dr1.Close();
-                con.Close();
-                cmd2 = new SqlCommand("update product set product_quantity=@product_quantity where product_id=@product_id", con);
-                con.Open();
-                cmd2.Parameters.AddWithValue("@product_id", +pid);
-                cmd2.Parameters.AddWithValue("@product_quantity", p_quantity);
-                int i1 = cmd2.ExecuteNonQuery();
-                con.Close();
-                cmd3 = new SqlCommand("insert into orderdetail(bill1_id,product_id,a_quantity)values(@bill1_id,@product_id,@a_quantity)", con);
-                con.Open();
-                cmd3.Parameters.AddWithValue("@bill1_id", id);
-                cmd3.Parameters.AddWithValue("@product_id", pid);
-                cmd3.Parameters.AddWithValue("@a_quantity", +qty);
-                int i2 = cmd3.ExecuteNonQuery();
+                dr.Close();
                 con.Close();
 
+                // ⭐ FETCH CART ITEMS
+                SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM addtocart WHERE registration_id=" + k, con);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
 
+                for (int r = 0; r < dt.Rows.Count; r++)
+                {
+                    int qty = Convert.ToInt32(dt.Rows[r]["a_quantity"]);
+                    int pid = Convert.ToInt32(dt.Rows[r]["product_id"]);
+
+                    // GET PRODUCT OLD QTY
+                    cmd1 = new SqlCommand("SELECT product_quantity FROM product WHERE product_id=@pid", con);
+                    cmd1.Parameters.AddWithValue("@pid", pid);
+                    con.Open();
+                    qty1 = Convert.ToInt32(cmd1.ExecuteScalar());
+                    con.Close();
+
+                    int p_quantity = qty1 - qty;
+
+                    // UPDATE PRODUCT QTY
+                    cmd2 = new SqlCommand("UPDATE product SET product_quantity=@qty WHERE product_id=@pid", con);
+                    cmd2.Parameters.AddWithValue("@qty", p_quantity);
+                    cmd2.Parameters.AddWithValue("@pid", pid);
+                    con.Open();
+                    cmd2.ExecuteNonQuery();
+                    con.Close();
+
+                    // INSERT ORDER DETAIL
+                    cmd3 = new SqlCommand("INSERT INTO orderdetail(bill1_id,product_id,a_quantity) VALUES(@bid,@pid,@qty)", con);
+                    cmd3.Parameters.AddWithValue("@bid", id);
+                    cmd3.Parameters.AddWithValue("@pid", pid);
+                    cmd3.Parameters.AddWithValue("@qty", qty);
+                    con.Open();
+                    cmd3.ExecuteNonQuery();
+                    con.Close();
+                }
+
+             
+                cmd = new SqlCommand("DELETE FROM addtocart WHERE registration_id=@rid", con);
+                cmd.Parameters.AddWithValue("@rid", k);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                Response.Redirect("thankYou.aspx?registration_id=" + k);
             }
-            cmd = new SqlCommand("delete from addtocart where registration_id='" + k + "'", con);
-            con.Open();
-            cmd.Parameters.AddWithValue("@registration_id", +k);
-            cmd.ExecuteNonQuery();
-            int u_id = Convert.ToInt16(Session["registration_id"].ToString());
-            Response.Redirect(".aspx?registration_id=" + u_id);
-            con.Close();
         }
-    }
 
-    protected void Button2_Click(object sender, EventArgs e)
-    {
-        txt_contactno.Text = "";
-        bill_city.Text = "";
-        txt_mail.Text = "";
-        bill_name.Text = "";
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            txt_contactno.Text = "";
+            bill_city.Text = "";
+            txt_mail.Text = "";
+            bill_name.Text = "";
+        }
     }
 }
